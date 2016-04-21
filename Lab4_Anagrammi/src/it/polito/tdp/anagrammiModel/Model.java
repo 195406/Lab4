@@ -1,23 +1,32 @@
 package it.polito.tdp.anagrammiModel;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import it.polito.tdp.anagrammiDAO.AnagrammaDAO;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 
 public class Model {
 
-	private List<String> permutazioni=new ArrayList<String>();
-	public Map<String,Boolean> controllo=new HashMap<String,Boolean>();
+	
+	
+	
 	private AnagrammaDAO d=new AnagrammaDAO();
+	
+	private List<Text> text=new ArrayList<Text>();
 	
     public void permuta(String inizio,String fine){
 		
 		if(fine.length()<=1){
-			permutazioni.add(inizio+fine);
-		    controllo.put(inizio+fine, d.findWord(inizio+fine));
+			
+			
+			String stringa = inizio+fine;
+			Text t=new Text(stringa+"\n");
+			boolean check=d.findWord(stringa);
+			if(check==false)
+				t.setFill(Color.RED);
+			text.add(t);
+			
 		}
 		else{
 			
@@ -29,17 +38,17 @@ public class Model {
 		}
 		
 	}
+    
+   
     public void clearPerm(){
-    	this.permutazioni.clear();
+    	this.text.clear();
     }
-    public List<String> getPerm(){
-    	return permutazioni;
+    
+    public List<Text> getTesti(){
+    	return this.text;
     }
-	
-	public Map<String,Boolean> getControllo(){
-		return controllo;
-	}
-	
+    
+    
 	
 	
 	public static void main(String[] args) {

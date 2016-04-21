@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AnagrammaDAO {
 	
@@ -24,10 +26,13 @@ public class AnagrammaDAO {
 				contatore++;
 			}
 			if(contatore==0){
+				
 				trovata=false;
 			}else{
+				
 				trovata=true;
 			}
+			res.close();
 			st.close();
 			//conn.close();
 			return trovata;
@@ -39,6 +44,24 @@ public class AnagrammaDAO {
 		}		
 		
 		
+	}
+	
+	public List<String> getDizionario(){
+		List<String> dizionario=new ArrayList<String>();
+		final String sql="select nome from parola";
+		try {
+			PreparedStatement st=conn.prepareStatement(sql);
+			ResultSet res=st.executeQuery();
+			while(res.next())
+				dizionario.add(res.getString("nome"));
+			st.close();
+			//conn.close();
+			return dizionario;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new RuntimeException("errore");
+		}
 	}
 	
 	public void closeConn(Connection conn){
